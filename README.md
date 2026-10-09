@@ -1,41 +1,26 @@
 # Skills by Luke
 
-Reusable skills I author for coding agents. Each skill includes its instructions and any supporting references in one directory.
+This repository contains two skills I wrote for coding agents. Each skill provides instructions for approaching a task and examples for checking the results.
 
-| Skill | Use it to |
-| --- | --- |
-| [thinktank](skills/thinktank/SKILL.md) | Explore a topic with five presenters by default and rank findings using three judges. |
-| [business-logic-review](skills/business-logic-review/SKILL.md) | Review a PR, diff, feature, or proposal against product goals, business rules, and user expectations. |
+[thinktank](skills/thinktank/SKILL.md) investigates a topic from several perspectives. By default, five agents gather evidence independently, and three separate judges score their findings. The coordinating agent ranks the findings and reports disagreements and unanswered questions. For creative decisions, the investigators develop alternatives before seeing proposed solutions, unless you ask them to compare only the options you supply.
 
-`thinktank` requires a runtime with subagent support and capacity for three independent judges. `business-logic-review` includes [evaluation cases](skills/business-logic-review/references/evaluation.md) for checking review quality.
+Ask your agent to "Use thinktank to compare these options." Add `agents=7`, for example, to use seven investigators. This changes the investigator count; the three judges stay the same. Thinktank requires subagent support. If completed agents still occupy slots and cannot be released, the default team needs nine slots, including the coordinator, with extra capacity for replacements.
 
-`thinktank` defaults to five presenters; put `agents=N` in your request to override
-that count. The three independent judges are separate from this setting. For
-creative decisions, presenters generate alternatives before seeing supplied
-solutions; judges compare both sets and can challenge a materially narrow rubric.
+[business-logic-review](skills/business-logic-review/SKILL.md) reviews a pull request, diff, feature, or proposal against the product's goals and rules. It checks whether the implementation does what was requested and whether that behavior helps users complete their task. Findings cite the evidence for the expected behavior and the effect on users. Missing or conflicting requirements become product questions rather than assumed defects.
 
-## Install the skills you want
+Ask your agent to "Use business-logic-review to review this PR against the product requirements." The review explains the effect on users, recommends corrections or decisions, and suggests scenarios to verify the result. Editing files or posting review comments requires authorization from your request.
 
-The repository is currently private. Install both skills globally for Codex and Claude Code using authenticated GitHub SSH access:
+The repository is currently private. To install both skills globally for Codex and Claude Code, use Node.js 24, npm, Git, and SSH access to this repository:
 
 ```sh
 DISABLE_TELEMETRY=1 npx --yes skills@1.5.23 add 'git@github.com:LukeMccon/skills.git#v0.1.3' --skill '*' --global --agent codex --agent claude-code --yes
 ```
 
-To install one skill, replace `--skill '*'` with `--skill thinktank` or
-`--skill business-logic-review`.
+To install one skill, replace `--skill '*'` with `--skill thinktank` or `--skill business-logic-review`. The command pins the installer to `skills@1.5.23` and selects release `v0.1.3`. Rerunning it refreshes those skills and preserves skills with other names. Start a new agent session or refresh your application's skill list after installation.
 
-Release `v0.1.3` renames `agent-jury` to `thinktank`. Installation is additive;
-a standalone installation leaves the differently named older skill in place.
-Remove that older installation deliberately when adopting the new name in your
-consuming configuration. Start a new agent session or refresh your application's
-skill list after installation.
+Thinktank was previously named `agent-jury`. Installing the new name leaves an existing `agent-jury` installation in place. If you are upgrading from that version, remove the old skill when you switch.
 
-The repository contains my authored skills. Third-party skill selections and personal machine setup belong in the consuming configuration.
-
-## Validate a checkout before releasing it
-
-Use Node.js 22.20.0 or newer, npm, and Git. Discover the collection and exercise installation twice in a disposable home:
+To check a local checkout, run these commands from the repository root. The workflow check also requires `actionlint`:
 
 ```sh
 DISABLE_TELEMETRY=1 npx --yes skills@1.5.23 add . --list
@@ -44,8 +29,6 @@ actionlint .github/workflows/validate-skills.yml
 git diff --check
 ```
 
-The smoke check verifies Codex and Claude Code discovery and preserves an unrelated skill. CI runs it on Linux and macOS. Test coverage does not establish that agents will reach correct conclusions; review each skill's instructions and evaluate it against representative tasks.
-
-Create an immutable repository release tag after validation. Tags version the collection as a whole.
+The smoke test installs the skills twice in a temporary home, checks the installed files and discovery locations, and verifies that an unrelated skill survives. CI runs these installation checks on Linux and macOS with Node.js 24 and scans for credentials with Gitleaks. The [thinktank cases](skills/thinktank/references/evaluation.md) and [business review cases](skills/business-logic-review/references/evaluation.md) help assess how agents follow the instructions. Installation checks alone do not measure the quality of an agent's conclusions.
 
 Released under the [MIT license](LICENSE).
