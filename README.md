@@ -10,10 +10,10 @@ Ask your agent to "Use thinktank to compare these options." Add `agents=7`, for 
 
 Ask your agent to "Use business-logic-review to review this PR against the product requirements." The review explains the effect on users, recommends corrections or decisions, and suggests scenarios to verify the result. Editing files or posting review comments requires authorization from your request.
 
-The repository is currently private. To install both skills globally for Codex and Claude Code, use Node.js 24, npm, Git, and SSH access to this repository:
+To install both skills globally for Codex and Claude Code, use Node.js 24, npm, and Git:
 
 ```sh
-DISABLE_TELEMETRY=1 npx --yes skills@1.5.23 add 'git@github.com:LukeMccon/skills.git#v0.1.3' --skill '*' --global --agent codex --agent claude-code --yes
+DISABLE_TELEMETRY=1 npx --yes skills@1.5.23 add 'https://github.com/LukeMccon/skills.git#v0.1.3' --skill '*' --global --agent codex --agent claude-code --yes
 ```
 
 To install one skill, replace `--skill '*'` with `--skill thinktank` or `--skill business-logic-review`. The command pins the installer to `skills@1.5.23` and selects release `v0.1.3`. Rerunning it refreshes those skills and preserves skills with other names. Start a new agent session or refresh your application's skill list after installation.
