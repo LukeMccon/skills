@@ -1,0 +1,4 @@
+interface:
+  display_name: "Business Logic Review"
+  short_description: "Review changes against product intent and user needs"
+  default_prompt: "Use $business-logic-review to check this change against business rules, product goals, and user expectations."
