@@ -4,7 +4,11 @@ These cases check delegation planning, not the truth or quality of an investigat
 
 | Request or setup | Expected behavior |
 | --- | --- |
-| Use thinktank to explore how a neighborhood repair café could organize volunteer shifts. | Five presenters with task-specific angles, exactly three fresh judges, one bounded investigation round. The noncoding topic is eligible without a topic whitelist. |
+| Use thinktank to explore how a neighborhood repair café could organize volunteer shifts. | General mode: five independent whole-task reviews without assigned angles, exactly three fresh judges, one bounded investigation round. The noncoding topic is eligible without a topic whitelist. |
+| Use thinktank to review this proposal's security, usability, and costs. | General mode: every presenter reviews the full supplied scope. Listing concerns does not assign specialties or select focused mode. |
+| Use thinktank mode=focused agents=2 to review this proposal. | Two presenters with complementary, overlapping focus areas; three fresh judges each assess every consolidated finding. |
+| Use thinktank with separate security and usability reviewers. | An explicit request for specialized reviewers selects focused mode. |
+| Use thinktank mode=general, but assign each reviewer a different specialty. | Resolve the conflicting mode request before dispatch. An unknown mode such as mode=other also requires clarification. |
 | Use thinktank agents=7 to compare these options. | Seven presenters, three judges; the explicit count affects presenters only. |
 | Use thinktank with two presenters to compare these options. | Two presenters, three judges; honor the natural-language override. |
 | Use thinktank agents=0 to compare these options. | Resolve the invalid count before dispatch; do not silently use the default or invent a zero-presenter panel. |

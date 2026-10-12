@@ -2,7 +2,7 @@
 
 This repository contains two skills I wrote for coding agents. Each skill provides instructions for approaching a task and examples for checking the results.
 
-[thinktank](skills/thinktank/SKILL.md) investigates a topic from several perspectives. By default, five agents gather evidence independently, and three separate judges score their findings. The coordinating agent ranks the findings and reports disagreements and unanswered questions. For creative decisions, the investigators develop alternatives before seeing proposed solutions, unless you ask them to compare only the options you supply.
+[thinktank](skills/thinktank/SKILL.md) investigates a topic through independent reviews. By default, five agents each review the whole task without assigned specialties, and three separate judges score their findings. Request `mode=focused` to assign complementary areas to the reviewers. The coordinating agent ranks the findings and reports disagreements and unanswered questions. For creative decisions, the investigators develop alternatives before seeing proposed solutions, unless you ask them to compare only the options you supply.
 
 Ask your agent to "Use thinktank to compare these options." Add `agents=7`, for example, to use seven investigators. This changes the investigator count; the three judges stay the same. Thinktank requires subagent support. If completed agents still occupy slots and cannot be released, the default team needs nine slots, including the coordinator, with extra capacity for replacements.
 
@@ -13,10 +13,10 @@ Ask your agent to "Use business-logic-review to review this PR against the produ
 To install both skills globally for Codex and Claude Code, use Node.js 24, npm, and Git:
 
 ```sh
-DISABLE_TELEMETRY=1 npx --yes skills@1.5.23 add 'https://github.com/LukeMccon/skills.git#v0.1.3' --skill '*' --global --agent codex --agent claude-code --yes
+DISABLE_TELEMETRY=1 npx --yes skills@1.5.23 add 'https://github.com/LukeMccon/skills.git#v0.1.4' --skill '*' --global --agent codex --agent claude-code --yes
 ```
 
-To install one skill, replace `--skill '*'` with `--skill thinktank` or `--skill business-logic-review`. The command pins the installer to `skills@1.5.23` and selects release `v0.1.3`. Rerunning it refreshes those skills and preserves skills with other names. Start a new agent session or refresh your application's skill list after installation.
+To install one skill, replace `--skill '*'` with `--skill thinktank` or `--skill business-logic-review`. The command pins the installer to `skills@1.5.23` and selects release `v0.1.4`. Rerunning it refreshes those skills and preserves skills with other names. Start a new agent session or refresh your application's skill list after installation.
 
 Thinktank was previously named `agent-jury`. Installing the new name leaves an existing `agent-jury` installation in place. If you are upgrading from that version, remove the old skill when you switch.
 

@@ -11,13 +11,15 @@ Coordinate independent presenters, submit their findings to exactly three judge 
 
 Extract the objective, scope, available evidence, constraints, and expected deliverable from the request. Ask only about missing information that materially blocks the task. State reasonable defaults and proceed:
 
-- Five presenters by default, each investigating a distinct angle on the same objective.
+- Five independent presenters by default.
 - Exactly three independent judges, with equal voting and scoring weight.
 - The main agent aggregates results; delegate aggregation only when useful.
 - One investigation round and at most one clarification/rescoring round.
 - At most five substantive findings per presenter, unless scope warrants more.
 
 Read `agents=N` in the request as the number of presenters; honor an explicit natural-language count too. The default is five. The count excludes the three judges and the coordinating agent. Require a positive integer and resolve invalid or conflicting counts before dispatch. For example: "Use thinktank agents=7 to compare these options."
+
+Use `mode=general` by default: every presenter reviews the whole task independently, choosing relevant concerns without assigned specialties or angles. Use `mode=focused` only when the user explicitly requests it or specialized reviewers; assign complementary areas with some overlap. Naming concerns alone does not select focused mode. Resolve invalid or conflicting mode requests before dispatch.
 
 Set a finite deadline or tool budget for each assignment, proportional to the task and any user budget. Do not expand agent counts or repeat rounds indefinitely. This skill requests investigation and ranking; carry out changes only when the user's task also authorizes them.
 
@@ -31,11 +33,11 @@ Have each presenter develop alternatives independently and preserve all first-pa
 
 ## Presenters submit evidence, not votes
 
-Give each presenter the same task brief and a different useful focus: for example, direct evidence, alternative explanations, or practical consequences. Preserve some overlap so they can independently discover the same issue. Do not show presenters one another's findings during the first round.
+Give each presenter the same task brief and evidence access, applying the selected mode to their scope. Do not show presenters one another's findings during the first round.
 
-Include the objective, scope, focus, evidence access, budget, and this output contract in each assignment:
+Include the objective, scope, mode, any focused assignment, evidence access, budget, and this output contract in each assignment:
 
-> Investigate your assigned angle independently. Return up to the agreed number of findings. For each, provide a local ID, concise claim, specific evidence or reproduction steps, reasoning connecting evidence to the claim, relevance and consequences, uncertainty or counterevidence, and a suggested next step. Distinguish observations from inferences. Report coverage gaps and an empty result honestly. Do not spawn more agents or modify shared files unless assigned to do so.
+> Review the supplied scope independently. Return up to the agreed number of findings. For each, provide a local ID, concise claim, specific evidence or reproduction steps, reasoning connecting evidence to the claim, relevance and consequences, uncertainty or counterevidence, and a suggested next step. Distinguish observations from inferences. Report coverage gaps and an empty result honestly. Do not spawn more agents or modify shared files unless assigned to do so.
 
 Evidence must be inspectable: file paths and lines, command output, source links and relevant excerpts, or other task-appropriate artifacts. A proposal can use explicit assumptions and feasibility evidence; it need not pretend to be an established fact.
 
@@ -95,7 +97,7 @@ The panel verdict is the majority verdict when at least two judges agree; otherw
 
 Return:
 
-- Task, scope, presenter count and angles, judging rubric, and any coverage limitations.
+- Task, scope, mode, presenter count, any assigned focus areas, judging rubric, and coverage limitations.
 - A table with rank, finding ID and claim, each judge's score, combined score /30, and panel verdict.
 - Evidence links, brief rationale, disagreement or score spread, and a useful next step for each finding.
 - Incomplete or excluded work and reasons, plus access to the canonical evidence packet and individual ballots when reports are saved.
